@@ -14,6 +14,16 @@ function BuildPicture(id){
 	image.src = picturesDb[id].showSide;
 }
 
+function checkForWin(){
+	for(var i in picturesDb){
+		if(i.showSide === i.bSide)
+		{
+			return;
+		}
+	}
+	alert('Winner');
+}
+
 function flip(id){
 	if(picturesDb[id].showSide === picturesDb[id].aSide)
 		picturesDb[id].showSide = picturesDb[id].bSide;
@@ -29,9 +39,8 @@ function flipPicture(id){
 		flip(id);
 		flipedPair.push(id);
 	}
-	else{
+	else
 		checkFlipped(flipedPair[0],flipedPair[1]);
-	}
 }
 
 function picturesDbInit(){
@@ -49,7 +58,8 @@ function checkFlipped(one, two){
 		var image1 = document.getElementById(one);
 		image1.onclick = '';
 		var image2 = document.getElementById(two);
-		image2.onclick = '';		
+		image2.onclick = '';
+		checkForWin();
 	}
 	else{
 		flip(one);
