@@ -35,12 +35,11 @@ function flip(id){
 
 function flipPicture(id){
 	id = id.currentTarget.attributes.id.value;
-	if(flipedPair.length < 2){	
 		flip(id);
 		flipedPair.push(id);
-	}
-	else
-		checkFlipped(flipedPair[0],flipedPair[1]);
+	if(flipedPair.length === 2)
+		setTimeout(() => checkFlipped(flipedPair[0],flipedPair[1]),500);
+		checkForWin();
 }
 
 function picturesDbInit(){
@@ -59,7 +58,6 @@ function checkFlipped(one, two){
 		image1.onclick = '';
 		var image2 = document.getElementById(two);
 		image2.onclick = '';
-		checkForWin();
 	}
 	else{
 		flip(one);
