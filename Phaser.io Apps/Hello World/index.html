@@ -13,7 +13,7 @@
         physics: {
             default: 'arcade',
             arcade: {
-                gravity: { y: 300 },
+                gravity: { y: 500 },
                 debug: false
             }
         },
@@ -56,11 +56,15 @@
         platforms.create(200, 600, 'ground');
         platforms.create(600, 600, 'ground');
 
-        platforms.create(600, 450, 'ground');
-        platforms.create(50, 300, 'ground');
-        platforms.create(750, 200, 'ground');
+        platforms.create(700, 500, 'ground');
+        platforms.create(100, 400, 'ground');
+        platforms.create(700, 300, 'ground');
+        platforms.create(100, 200, 'ground');
+        platforms.create(700, 100, 'ground');
+
+
         
-        player = this.physics.add.sprite(100,450,'dude').setActive().setVelocity(0,0).setBounce(0.2);
+        player = this.physics.add.sprite(100,450,'dude').setActive().setVelocity(0,0).setBounce(0.1);
         player.setCollideWorldBounds(true);
 
         this.physics.add.collider(platforms, player);
@@ -87,18 +91,19 @@
 
         cursors = this.input.keyboard.createCursorKeys();
         
-        onion = this.physics.add.group({
-            key: 'onion',
-            repeat: 11,
-            setXY: { x: 12, y: 0, stepX: 70 }
-        });
+        onions = this.physics.add.group();
+		
+		for(var i = 0; i < 11; i++)
+		{
+			var one = this.physics.add.sprite(12 + i * 70, 0, 'onion').setActive().setVelocity(0,0).setBounce(0,2);
+			//onions.create(12 + i* 70,0, 'onion').setActive().setVelocity(0,0).setBounce(0,2);
+			onions.add(one);
+			this.physics.add.collider(platforms, one);
+		}
 
-        onion.children.iterate(function (child) {
-            child.setActive().setVelocity(0,0).setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-        }); 
-
-        this.physics.add.collider(platforms, onion);
-        this.physics.add.overlap(player, onion, collectStar, null, this);
+     
+        this.physics.add.collider(platforms, onions);
+        this.physics.add.overlap(player, onions, collectStar, null, this);
     }
 
 
