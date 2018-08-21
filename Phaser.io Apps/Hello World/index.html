@@ -31,7 +31,7 @@
         this.load.setBaseURL('http://labs.phaser.io');
         this.load.image('sky', 'assets/skies/sky3.png');
         this.load.image('ground', 'assets/sprites/platform.png');
-        this.load.image('apple', 'assets/sprites/apple.png');
+        this.load.image('crate', 'assets/sprites/crate32.png');
         this.load.image('onion', 'assets/sprites/onion.png');
         this.load.spritesheet('dude','assets/sprites/dude.png',
             { frameWidth: 32, frameHeight: 48 }
@@ -40,11 +40,45 @@
     }
 
     var platforms;
-    var onion;
+    var onions;
+    var score;
+    var scoreText;
+    var crates;
 
-    function collectStar(player, star)
+    function collectStar(player, onion)
     {
-        star.disableBody(true, true);
+        console.log(onion);
+        console.log(typeof(onion));
+        onion.disableBody(true, true);
+
+        score += 10;
+        scoreText.setText('Score: ' + score);
+
+        if( onion.countActive(true) === 0)
+        {
+            onion.children.iterate( function (child) {
+                child.enableBody(true, child.x, 0, true, true);
+            });
+            
+            var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+            
+            var crate = crates.create(x, 16, 'crate');
+            crate.setBounce(1);
+            crate.setCollideWorldBounds(true);
+            crate.setVelocity(Phaser.Math.Between(-200,200), 20);
+            crate.allowGravity = false;
+        }
+    }
+
+    function hitCrate(player, crate)
+    {
+        this.physics.pause();
+
+        player.setTint(0xff0000);
+
+        player.anims.play('turn');
+
+        gameOver = true;
     }
 
     function create ()
@@ -52,18 +86,16 @@
         this.add.image(400, 300, 'sky');
         
         platforms = this.physics.add.staticGroup();
-
+        //down
         platforms.create(200, 600, 'ground');
         platforms.create(600, 600, 'ground');
-
+        //mid
         platforms.create(700, 500, 'ground');
         platforms.create(100, 400, 'ground');
         platforms.create(700, 300, 'ground');
         platforms.create(100, 200, 'ground');
         platforms.create(700, 100, 'ground');
 
-
-        
         player = this.physics.add.sprite(100,450,'dude').setActive().setVelocity(0,0).setBounce(0.1);
         player.setCollideWorldBounds(true);
 
@@ -91,8 +123,8 @@
 
         cursors = this.input.keyboard.createCursorKeys();
         
+        //Onions
         onions = this.physics.add.group();
-		
 		for(var i = 0; i < 11; i++)
 		{
 			var one = this.physics.add.sprite(12 + i * 70, 0, 'onion').setActive().setVelocity(0,0).setBounce(0,2);
@@ -100,10 +132,16 @@
 			onions.add(one);
 			this.physics.add.collider(platforms, one);
 		}
-
-     
         this.physics.add.collider(platforms, onions);
         this.physics.add.overlap(player, onions, collectStar, null, this);
+
+        //Bombs
+        crates = this.physics.add.group();
+        this.physics.add.collider(crates, platforms);
+        this.physics.add.collider(player, crates, hitCrate, null, this);
+
+        score = 0;
+        scoreText = this.add.text(16, 16, 'Score:0', { fontSize: '32px',fill:'#000'});
     }
 
 
