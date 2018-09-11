@@ -8,12 +8,12 @@ namespace LinearDataStructures
 {
     class Node<T>
     {
-        public T Element { get; set; }
+        public T Value { get; set; }
         public Node<T> NextNode { get; set; }
 
-        public Node(T element)
+        public Node(T value)
         {
-            this.Element = element;
+            this.Value = value;
             this.NextNode = null;
         }
     }
