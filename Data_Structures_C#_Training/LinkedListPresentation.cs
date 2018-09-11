@@ -11,19 +11,14 @@ namespace LinearDataStructures
         private Node<T> firstNode;
         private Node<T> currentNode;
         private int elementsCounter;
-        private int maxId;
+
+        public int Count => elementsCounter;
 
         public int Length
         {
             get { return this.elementsCounter; }
             private set { }
 
-        }
-
-        public int MaxID
-        {
-            get { return maxId; }
-            private set { }
         }
 
         public LinkedListPresentation()
@@ -50,7 +45,48 @@ namespace LinearDataStructures
             }
 
             this.elementsCounter++;
-            maxId++;
+        }
+
+        public void AddAt(T forAdd, int index)
+        {
+            if (index >= this.elementsCounter || index < 0)
+            {
+                throw new ArgumentOutOfRangeException("Invalid index: " + index);
+            }
+
+            Node<T> temp = firstNode;
+
+            while (index -1  != 0)
+            {
+                index--;
+
+                temp = temp.NextNode;
+            }
+
+            temp.NextNode = new Node<T>(forAdd,temp.NextNode);
+
+            elementsCounter++;
+        }
+
+        public void RemoveAt(int index)
+        {
+            if (index >= this.elementsCounter || index < 0)
+            {
+                throw new ArgumentOutOfRangeException("Invalid index: " + index);
+            }
+
+            Node<T> temp = firstNode;
+
+            while(index -1 != 0)
+            {
+                index--;
+                
+                temp = temp.NextNode;
+            }
+
+            temp.NextNode = temp.NextNode.NextNode;
+
+            elementsCounter--;
         }
 
         public bool Remove(T elemtForRemove)
@@ -94,7 +130,7 @@ namespace LinearDataStructures
 
         public T GetElementAt(int index)
         {
-            if (index >= maxId && index < 0)
+            if (index >= elementsCounter && index < 0)
             {
                 throw new IndexOutOfRangeException("Invalid index: " + index); ;
             }
@@ -125,7 +161,7 @@ namespace LinearDataStructures
 
             while (temp != null)
             {
-                Console.WriteLine("Int : {0} ", temp.Value);
+                Console.WriteLine(temp.Value);
                 temp = temp.NextNode;
             }
         }

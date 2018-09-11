@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace LinearDataStructures
 {
@@ -12,27 +13,81 @@ namespace LinearDataStructures
         {
             //Array
             Console.WriteLine("------------Array List------------");
+
             var arr = new ArrayList<int>();
 
-            arr.AddToEnd(0);
-            arr.AddToEnd(20);
 
-            for (int i = 19; i > 0; i--)
+            arr.AddToEnd(0);
+            arr.AddToEnd(10000);
+
+            Stopwatch swArrAdd = new Stopwatch();
+
+            swArrAdd.Start();
+            for (int i = 9999; i > 0; i--)
             {
                 arr.AddAtPosition(1, i);
             }
 
-            arr.print();
+            swArrAdd.Stop();
 
-            for (int i = 0; i < 5; i++)
+            Console.WriteLine("Adding 1000 elements in the middle of array : {0}", swArrAdd.Elapsed);
+
+            Stopwatch swGet = new Stopwatch();
+            swGet.Start();
+            int temp = arr.GetElementAt(arr.Count - 1);
+            swGet.Stop();
+            Console.WriteLine("Getting element at the end of array : {0} {1}", swGet.Elapsed, temp);
+
+            Stopwatch swArrRemove = new Stopwatch();
+
+            swArrRemove.Start();
+            for (int i = 0; i < 9999; i++)
             {
-                arr.RemoveAt(11);
+                arr.RemoveAt(1);
             }
+            swArrRemove.Stop();
 
-            arr.print();
+            Console.WriteLine("Removing 1000 elements in the middle of array : {0}", swArrRemove.Elapsed);
+
 
             //Linked List
             Console.WriteLine("------------Linked List------------");
+
+
+            var lst = new LinkedListPresentation<int>();
+
+            lst.Add(0);
+            lst.Add(10000);
+
+            Stopwatch swLstAdd = new Stopwatch();
+
+            swLstAdd.Start();
+            for (int i = 9999; i > 0; i--)
+            {
+                lst.AddAt(i, 1);
+            }
+
+            swLstAdd.Stop();
+
+            Console.WriteLine("Adding 1000 elements in the middle of list : {0}", swLstAdd.Elapsed);
+
+            Stopwatch swGetLst = new Stopwatch();
+            swGetLst.Start();
+            temp = lst.GetElementAt(lst.Count - 1);
+            swGetLst.Stop();
+            Console.WriteLine("Getting element at the end of list : {0} {1}", swGetLst.Elapsed, temp);
+
+            Stopwatch swLstRemove = new Stopwatch();
+
+            swLstRemove.Start();
+            for (int i = 0; i < 9999; i++)
+            {
+                lst.RemoveAt(1);
+            }
+            swLstRemove.Stop();
+
+            Console.WriteLine("Removing 1000 elements in the middle of list : {0}", swLstRemove.Elapsed);
+
 
             //Stack
             Console.WriteLine("------------Stack------------");

@@ -15,6 +15,10 @@ namespace LinearDataStructures
         {
             this.Value = value;
             this.NextNode = null;
+        }        public Node(T value, Node<T> next)
+        {
+            this.Value = value;
+            this.NextNode = next;
         }
     }
 }
