@@ -11,6 +11,8 @@ namespace LinearDataStructures
     {
         static void Main(string[] args)
         {
+            int countOfElementsForTest = 10000;
+
             //Array
             Console.WriteLine("------------Array List------------");
 
@@ -18,12 +20,12 @@ namespace LinearDataStructures
 
 
             arr.AddToEnd(0);
-            arr.AddToEnd(10000);
+            arr.AddToEnd(1);
 
             Stopwatch swArrAdd = new Stopwatch();
 
             swArrAdd.Start();
-            for (int i = 9999; i > 0; i--)
+            for (int i = countOfElementsForTest; i > 0; i--)
             {
                 arr.AddAtPosition(1, i);
             }
@@ -41,7 +43,7 @@ namespace LinearDataStructures
             Stopwatch swArrRemove = new Stopwatch();
 
             swArrRemove.Start();
-            for (int i = 0; i < 9999; i++)
+            for (int i = 0; i < countOfElementsForTest; i++)
             {
                 arr.RemoveAt(1);
             }
@@ -57,12 +59,12 @@ namespace LinearDataStructures
             var lst = new LinkedListPresentation<int>();
 
             lst.Add(0);
-            lst.Add(10000);
+            lst.Add(1);
 
             Stopwatch swLstAdd = new Stopwatch();
 
             swLstAdd.Start();
-            for (int i = 9999; i > 0; i--)
+            for (int i = countOfElementsForTest; i > 0; i--)
             {
                 lst.AddAt(i, 1);
             }
@@ -80,7 +82,7 @@ namespace LinearDataStructures
             Stopwatch swLstRemove = new Stopwatch();
 
             swLstRemove.Start();
-            for (int i = 0; i < 9999; i++)
+            for (int i = 0; i < countOfElementsForTest; i++)
             {
                 lst.RemoveAt(1);
             }
@@ -101,7 +103,7 @@ namespace LinearDataStructures
 
             for (int i = 0; i < 20; i++)
             {
-                Console.WriteLine(stack.Peek());
+                //Console.WriteLine(stack.Peek());
                 stack.Pop();
             }
 
@@ -117,7 +119,7 @@ namespace LinearDataStructures
 
             for (int i = 0; i < 20; i++)
             {
-                Console.WriteLine(queue.Peek());
+                //Console.WriteLine(queue.Peek());
                 queue.Dequeue();
             }
         }
